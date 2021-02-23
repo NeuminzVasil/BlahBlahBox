@@ -1,6 +1,5 @@
 package entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,10 +23,6 @@ public class Authority {
     @Column(name = "authority")
     private String authority;
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -40,6 +35,11 @@ public class Authority {
     @Override
     public int hashCode() {
         return Objects.hash(id, authority);
+    }
+
+    @Override
+    public String toString() {
+        return authority;
     }
 }
 

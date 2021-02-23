@@ -4,16 +4,20 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.sql.SQLException;
+import java.util.List;
 
+
+//@PropertySource("classpath:ignoreMe/values.properties")
 public class BBBServerStart {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException
+    {
 //        new BlahBlahBoxServer();
         System.out.println("BBBServerStart");
 
         /**
          * Создаем фабрикуСессий подключений к БД один раз на все приложение.
          * Требует закрытия после окончания работы с приложением.
-        */
+         */
         SessionFactory sessionFactory = new Configuration()
                 .configure("/configuration/hibernate.cfg.xml")
                 .buildSessionFactory();
@@ -40,6 +44,30 @@ public class BBBServerStart {
         Customer customer = session.get(Customer.class, 1L);
 
         /**
+         * пример использования NamedQuery
+         */
+        Customer customer2 = (Customer) session.getNamedQuery("customerWithAuthority")
+                                                            .setParameter("id", 1L)
+                                                            .getSingleResult();
+
+        List<Customer> customers = session.getNamedQuery("allCustomers")
+                                                        .getResultList();
+
+
+        /**
+         * работаем с объектом
+         */
+        System.out.println(customer);
+        System.out.println(customer.getAuthorities());
+
+
+        System.out.println("customer2:");
+        System.out.println(customer2);
+
+        System.out.println("customers:");
+        System.out.println(customers);
+
+        /**
          * заканчиваем транзакцию и автоматически закрываем сессию
          * для открытия новой сесии выполни:
          * session = sessionFactory.getCurrentSession();
@@ -47,7 +75,12 @@ public class BBBServerStart {
          */
         session.getTransaction().commit();
 
-        System.out.println(customer);
+
+        /**
+         * Закрываем фабрикуСессий
+         */
+        sessionFactory.close();
+        if (session != null) session.close();
 
         System.out.println("BBBServerStop");
 

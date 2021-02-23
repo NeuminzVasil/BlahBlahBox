@@ -10,15 +10,15 @@
         </property>
 
         <property name="hibernate.connection.url">
-            jdbc:postgresql://localhost:5432/makrosfactory?currentSchema=public
+            ${JDBC_DATABASE_URL_LF}
         </property>
 
         <property name="hibernate.connection.username">
-            postgres
+            ${JDBC_DATABASE_USERNAME_LF}
         </property>
 
         <property name="hibernate.connection.password">
-            j1j2j3j4
+            ${JDBC_DATABASE_PASSWORD_LF}
         </property>
 
         <property name="hibernate.connection.pool_size">
@@ -34,14 +34,6 @@
         </property>
 
         <property name="hibernate.show_sql">
-            false
-        </property>
-
-        <property name="hibernate.generate_statistics">
-            false
-        </property>
-
-        <property name="hibernate.use_sql_comments">
             false
         </property>
 

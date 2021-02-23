@@ -9,6 +9,12 @@ import java.util.List;
 @Entity
 @Table(name = "customers")
 @Data
+@NamedQueries({
+        @NamedQuery(name = "customerWithAuthority",
+                query = "SELECT crs FROM Customer crs JOIN FETCH crs.authorities WHERE crs.id = :id"),
+        @NamedQuery(name = "allCustomers",
+                query = "SELECT crs FROM Customer crs")
+})
 public class Customer {
 
     @Id
@@ -31,9 +37,9 @@ public class Customer {
     @Column(name = "active")
     private Boolean active;
 
-/*    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer") // fetch = FetchType.EAGER
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Authority> authorities;*/
+    private List<Authority> authorities;
 
     public Customer() {
     }
@@ -49,4 +55,8 @@ public class Customer {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return firstName + " " + lastName ;
+    }
 }
