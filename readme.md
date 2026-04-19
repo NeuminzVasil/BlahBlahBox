@@ -1,13 +1,3 @@
-# Цели и Шаги
-## FrontEnd: (не реализовано)
-
-## BaskEnd: (не реализовано)
-Server:
-1. Подключение к BD реализовано на HiberNAT. Конфигурационный файл Server/resources/configuration/hibernate.cfg.xml
-2. Таблицы с сущностями мапим в сущности Java
- 
-## Прочее: (не реализовано)
-
 ### Рабочие заметки 
 1. class="col-xl-4 col-lg-3 col-md-3 col-sm-5 col-xs iButton
 2.     <!--https://stackoverflow.com/questions/40773248/how-to-change-pages-based-on-url
@@ -83,3 +73,11 @@ Server:
                }
            ]
        }
+
+____
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+не загрузились почему то
+пока так
+<script src="/js/sockjs.min.js"></script>
+<script src="/js/stomp.min.js"></script>
