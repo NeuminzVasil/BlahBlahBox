@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход в чат</title>
+</head>
+<body>
+<h2>Вход</h2>
+<form method="post" th:action="@{/login}">
+    <input name="username" placeholder="Логин" required type="text"/><br/>
+    <input name="password" placeholder="Пароль" required type="password"/><br/>
+    <button type="submit">Войти</button>
+</form>
+<a href="/register">Регистрация</a>
+</body>
+</html>

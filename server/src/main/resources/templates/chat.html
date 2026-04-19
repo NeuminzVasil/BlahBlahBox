@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Чат</title>
+    <script src="/js/sockjs.min.js"></script>
+    <script src="/js/stomp.min.js"></script>
+</head>
+<body>
+<h2>Чат</h2>
+<hr/>
+<div id="messages" style="height:300px; overflow:auto; border:1px solid #ccc; margin:10px 0; padding:5px;"></div>
+<input id="toUser" placeholder="Кому (пусто = всем)" style="width:200px" type="text"/>
+<input id="message" placeholder="Сообщение" style="width:300px" type="text"/>
+<button onclick="sendMessage()">Отправить</button>
+
+<script>
+    var stompClient = null;
+    var username = "user";
+
+    function connect() {
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function() {
+            stompClient.subscribe('/topic/public', function(message) {
+                showMessage(JSON.parse(message.body));
+            });
+            stompClient.subscribe('/topic/private/' + username, function(message) {
+                showMessage(JSON.parse(message.body));
+            });
+        });
+    }
+
+    function sendMessage() {
+        var toUser = document.getElementById('toUser').value;
+        var content = document.getElementById('message').value;
+        if (!content.trim()) return;
+
+        fetch('/api/message', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({toUser: toUser || null, content: content})
+        });
+        document.getElementById('message').value = '';
+    }
+
+    function showMessage(msg) {
+        var div = document.getElementById('messages');
+        var target = msg.toUser ? ' → ' + msg.toUser : ' (всем)';
+        div.innerHTML += '<div><b>' + msg.fromUser + target + ':</b> ' + msg.content + '</div>';
+        div.scrollTop = div.scrollHeight;
+    }
+
+    connect();
+</script>
+</body>
+</html>
