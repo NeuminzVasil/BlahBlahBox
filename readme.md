@@ -1,4 +1,46 @@
-### Рабочие заметки 
+# Подготовка среды
+
+## Docker
+
+- Скачать здесь [docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
+- Проверить работоспособность
+
+```bash
+docker --version
+docker compose version
+```
+
+- Из каталога с файлом [docker-compose.yml](docker-compose.yml) поднять контейнеры с Postgres, Zookeeper, Kafka.
+
+```bash
+docker compose up -d
+```
+
+## Запуск
+
+```bash
+mvn clean install
+mvn spring-boot:run -pl server
+```
+
+``` shell 
+mvn clean install
+mvn spring-boot:run -pl server
+```
+
+# Команды чистки докер образов
+
+| Команда	                           | Что удаляет                       |
+|------------------------------------|-----------------------------------|
+| docker image prune                 | Висячие образы (без имени)        |
+| docker image prune -a	             | Все неиспользуемые образы         |
+| docker rmi $(docker images -q)	    | Все образы (если не используются) |
+| docker rmi -f $(docker images -q)	 | Все образы (принудительно)        |
+| docker system prune -a	            | Образы + контейнеры + сети        |
+| docker system prune -a --volumes	  | Всё, включая тома с данными       |
+
+# Заметки
+
 1. class="col-xl-4 col-lg-3 col-md-3 col-sm-5 col-xs iButton
 2.     <!--https://stackoverflow.com/questions/40773248/how-to-change-pages-based-on-url
        https://stackoverflow.com/questions/10816073/how-to-do-paging-in-angularjs&ndash;&gt;
@@ -10,9 +52,9 @@
        </pagination>-->
 3. heroku ps:scale web=1 - включить ПО на хероку
 4. <div ng-include="'invoice/invoiceEdit.html'"></div>
-5.  sessionStorage.setItem("userID", response.data.userId);
-    sessionStorage.setItem("userInfo", JSON.stringify(response.data));
-    return JSON.parse(sessionStorage.getItem("userInfo"));
+5. sessionStorage.setItem("userID", response.data.userId);
+   sessionStorage.setItem("userInfo", JSON.stringify(response.data));
+   return JSON.parse(sessionStorage.getItem("userInfo"));
 6.     {
            "id": 1554,
            "datacreate": "2020-11-20T11:03:45.065+00:00",
