@@ -13,6 +13,8 @@ docker compose version
 - Из каталога с файлом [docker-compose.yml](docker-compose.yml) поднять контейнеры с Postgres, Zookeeper, Kafka.
 
 ```bash
+docker desktop start
+docker info
 docker compose up -d
 ```
 
@@ -28,16 +30,40 @@ mvn clean install
 mvn spring-boot:run -pl server
 ```
 
-# Команды чистки докер образов
+## Команды оперативные под руку
 
-| Команда	                           | Что удаляет                       |
-|------------------------------------|-----------------------------------|
-| docker image prune                 | Висячие образы (без имени)        |
-| docker image prune -a	             | Все неиспользуемые образы         |
-| docker rmi $(docker images -q)	    | Все образы (если не используются) |
-| docker rmi -f $(docker images -q)	 | Все образы (принудительно)        |
-| docker system prune -a	            | Образы + контейнеры + сети        |
-| docker system prune -a --volumes	  | Всё, включая тома с данными       |
+```
+docker desktop start # запустит докер как услугу
+docker desktop stop # потушит докер как услугу
+docker desktop status # Проверить статус (работает или нет)
+docker desktop restart 
+docker system df # статистику по докер как услуге если запущен
+docker info # покажет ошибку если докер не запущен
+docker context show # покажет ошибку если докер не запущен
+docker compose up -d # поднимет контейнеры если запущена рядом с докер-файлом
+docker compose down # потушит контейнеры
+docker compose down -v # потушит контейнеры
+docker system prune -a --volumes # потушит контейнеры
+docker rmi -f $(docker images -q) # удалит образы контейнеров с диска
+docker rmi -f # # удалит образы контейнеров с диска
+docker compose exec postgres psql -U postgres -d chatdb - подключиться к БД из консоли и позволит выполнить SQL запросы
+\dt; # покажет все таблицы - что то типа TABLES SHOW
+select * from users; 
+\q; # выйдет из консольного режима SQL
+```
+
+## Команды чистки докер образов
+
+| Команда	                           | Что удаляет                              |
+|------------------------------------|------------------------------------------|
+| docker system df                   | Посмотреть сколько места занимают образы |
+| docker image prune                 | Висячие образы (без имени)               |
+| docker image prune -a	             | Все неиспользуемые образы                |
+| docker rmi $(docker images -q)	    | Все образы (если не используются)        |
+| docker rmi -f $(docker images -q)	 | Все образы (принудительно)               |
+| docker system prune -a	            | Образы + контейнеры + сети               |
+| docker system prune -a --volumes	  | Всё, включая тома с данными              |
+| docker compose down -v             | чтобы начать с чистой БД                 |
 
 # Заметки
 
