@@ -1,4 +1,7 @@
 spring:
+  threads:
+    virtual:
+      enabled: true # всё на виртуальных потоках Tomcat, WebSocket, @Async
   datasource:
     url: jdbc:postgresql://localhost:5432/chatdb
     username: postgres
@@ -9,6 +12,8 @@ spring:
     show-sql: false
   kafka:
     bootstrap-servers: localhost:9092
+    listener:
+      type: batch
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -17,6 +22,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
+        spring.kafka.consumer.threads: 4  # можно увеличить
         spring.json.trusted.packages: "*"
 
 server:
